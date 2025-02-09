@@ -21,6 +21,11 @@ body{
 
 }
 
+.next-song{
+  width: 500px;
+  margin: 12px;
+}
+
 .setlist{
   width: 500px;
   margin: 12px;

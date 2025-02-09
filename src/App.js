@@ -53,8 +53,11 @@ function App() {
           <h1>Karaoke Roulette of Doom</h1>
         </div>
         <div class="wheel-section">
-          <div class="setlist">
-            <h2>Setlist</h2>
+          <div class="next-song">
+            <h2>Next Song</h2>
+            <div class="setlist">
+              <h2>Setlist</h2>
+            </div>
           </div>
           <div class="wheel">
 
@@ -72,6 +75,7 @@ function App() {
 
           </div>
         </div>
+
       </div>
     )
   // };
