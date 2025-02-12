@@ -1,11 +1,13 @@
 import logo from './logo.svg';
 import "bootstrap/dist/css/bootstrap.min.css";
 import './App.css';
-import React, { useState} from "react";
+import React, { useState } from "react";
 import Songs from "./Components/Songs";
 import Setlist from "./Components/Setlist";
-import {Wheel} from "react-custom-roulette";
+import { Wheel } from "react-custom-roulette";
 import "./Components/Wheel";
+import "./Components/Songs";
+import songs from './Components/Songs';
 
 // const data = [
 //   { option: "Sing Normally", style: { backgroundColor: "blue", textColor: "white"}},
@@ -18,6 +20,11 @@ import "./Components/Wheel";
 function App() {
   const [ mustSpin, setMustSpin ] = useState(false);
   const [ prizeNumber, setPrizeNumber ] = useState(0);
+  var currentSong = "song";
+  var unplayedSongs = songs;
+  var playedSongs = [];
+
+  var style = "";
 
   const data = [
     { option: "Sing Normally", optionSize: 3, style: { backgroundColor: "blue", textColor: "white"}},
@@ -33,6 +40,15 @@ function App() {
       setPrizeNumber(newPrizeNumber);
       setMustSpin(true);
     }
+  }
+
+  const displaySong = (style) => {
+    const song = unplayedSongs[Math.floor(Math.random() * unplayedSongs.length)]
+    const result = `Sing ${song} in a ${style} voice`;
+    console.log(result);
+    document.getElementById("message").innerHTML = result;
+    playedSongs.push(song);
+    console.log(playedSongs);
   }
 
 
@@ -54,24 +70,35 @@ function App() {
         </div>
         <div class="wheel-section">
           <div class="next-song">
-            <h2>Next Song</h2>
-            <div class="setlist">
+            <h2>Now Playing</h2>
+            <div id="message">
+
+            </div>
+            <div id="setlist">
               <h2>Setlist</h2>
+              {playedSongs.map((song) => {
+                return(
+                  <p>{song}</p>
+                )
+              })}
             </div>
           </div>
           <div class="wheel">
 
-              <Wheel
-                mustStartSpinning={mustSpin}
-                prizeNumber={prizeNumber}
-                data={data}
-                spinDuration={0.3}
+            <Wheel
+              mustStartSpinning={mustSpin}
+              prizeNumber={prizeNumber}
+              data={data}
+              spinDuration={0.3}
 
-                onStopSpinning={() => {
-                  setMustSpin(false);
-                }}
-              />
-              <button class="spin-button" onClick={handleSpinClick}>SPIN</button>
+              onStopSpinning={() => {
+                setMustSpin(false);
+                console.log(data[prizeNumber].option);
+                style = data[prizeNumber].option;
+                displaySong(data[prizeNumber].option);
+              }}
+            />
+            <button class="spin-button" onClick={handleSpinClick}>SPIN</button>
 
           </div>
         </div>

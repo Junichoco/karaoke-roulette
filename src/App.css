@@ -17,6 +17,17 @@ body{
   justify-content: center;
 }
 
+#message{
+  min-height: 150px;
+  font-size: 3rem;
+  margin-bottom: 12px;
+  min-width: 500px;
+}
+
+#message {
+  margin-bottom: 12px;
+}
+
 .wheel {
 
 }
@@ -26,9 +37,9 @@ body{
   margin: 12px;
 }
 
-.setlist{
+#setlist{
   width: 500px;
-  margin: 12px;
+  /* margin: 12px; */
 }
 
 .spin-button {
