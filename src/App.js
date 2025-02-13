@@ -8,6 +8,7 @@ import { Wheel } from "react-custom-roulette";
 import "./Components/Wheel";
 import "./Components/Songs";
 import songs from './Components/Songs';
+import { renderToPipeableStream } from 'react-dom/server';
 
 // const data = [
 //   { option: "Sing Normally", style: { backgroundColor: "blue", textColor: "white"}},
@@ -20,9 +21,10 @@ import songs from './Components/Songs';
 function App() {
   const [ mustSpin, setMustSpin ] = useState(false);
   const [ prizeNumber, setPrizeNumber ] = useState(0);
+  const [ playedSongs, setPlayedSongs ] = useState([]);
+  const [ message, setMessage ] = useState("");
   var currentSong = "song";
   var unplayedSongs = songs;
-  var playedSongs = [];
 
   var style = "";
 
@@ -45,10 +47,21 @@ function App() {
   const displaySong = (style) => {
     const song = unplayedSongs[Math.floor(Math.random() * unplayedSongs.length)]
     const result = `Sing ${song} in a ${style} voice`;
-    console.log(result);
-    document.getElementById("message").innerHTML = result;
-    playedSongs.push(song);
+    // document.getElementById("message").innerHTML = result;
+
+    // playedSongs.push(song);
+
+    var newList = playedSongs;
+    newList.push(song);
+
+    setPlayedSongs(newList);
     console.log(playedSongs);
+
+    setMessage(()=> {
+      return(
+        <p>Sing <span class="song">{song}</span> in a {style} voice.</p>
+      )
+    })
   }
 
 
@@ -72,15 +85,17 @@ function App() {
           <div class="next-song">
             <h2>Now Playing</h2>
             <div id="message">
-
+              {message}
             </div>
             <div id="setlist">
               <h2>Setlist</h2>
-              {playedSongs.map((song) => {
-                return(
-                  <p>{song}</p>
-                )
-              })}
+              <ol>
+                {playedSongs.map((song) => {
+                  return(
+                    <li>{song}</li>
+                  )
+                })}
+              </ol>
             </div>
           </div>
           <div class="wheel">
