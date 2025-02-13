@@ -24,12 +24,8 @@ body{
   min-width: 500px;
 }
 
-#message {
-  margin-bottom: 12px;
-}
-
-.wheel {
-
+.song{
+  color:aqua
 }
 
 .next-song{
@@ -40,6 +36,10 @@ body{
 #setlist{
   width: 500px;
   /* margin: 12px; */
+  display: flex;
+  justify-content: center;
+  flex-direction: column;
+  align-items: center;
 }
 
 .spin-button {
@@ -57,4 +57,10 @@ body{
   color: aqua;
   border: 3px solid aqua;
   transition: all 0.5s;
+}
+
+ol{
+  padding-left: 0;
+  margin-left: 0px;
+  width: 300px;
 }
