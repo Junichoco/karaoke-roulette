@@ -23,8 +23,10 @@ function App() {
   const [ prizeNumber, setPrizeNumber ] = useState(0);
   const [ playedSongs, setPlayedSongs ] = useState([]);
   const [ message, setMessage ] = useState("");
+  const [ speed, setSpeed ] = useState("1");
   var currentSong = "song";
   var unplayedSongs = songs;
+  // var setlistSpeed = "0";
 
   var style = "";
 
@@ -55,13 +57,23 @@ function App() {
     newList.push(song);
 
     setPlayedSongs(newList);
-    console.log(playedSongs);
+    console.log(playedSongs.length);
+    console.log(speed);
 
     setMessage(()=> {
       return(
         <p>Sing <span class="song">{song}</span> in a {style} voice.</p>
       )
     })
+
+    if(playedSongs.length == 2){
+    // const marquee = document.getElementById("setlist-marq");
+    // marquee.scrollamount = 6;
+    setSpeed("6");
+    console.log("scroll amount changed");
+    // marquee.direction = "up";
+    }
+
   }
 
 
@@ -89,13 +101,12 @@ function App() {
             </div>
             <div id="setlist">
               <h2>Setlist</h2>
-              <ol>
-                {playedSongs.map((song) => {
-                  return(
-                    <li>{song}</li>
-                  )
-                })}
-              </ol>
+              {/* <marquee id="setlist-marq" scrollamount={speed}> */}
+              <Setlist
+                playedSongs={playedSongs}
+                scrollSpeed={speed}
+                />
+              {/* </marquee> */}
             </div>
           </div>
           <div class="wheel">
