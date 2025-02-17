@@ -21,14 +21,25 @@ import { renderToPipeableStream } from 'react-dom/server';
 function App() {
   const [ mustSpin, setMustSpin ] = useState(false);
   const [ prizeNumber, setPrizeNumber ] = useState(0);
+
+  const [ endPlaylist, setEndPlaylist ] = useState(true);
   const [ playedSongs, setPlayedSongs ] = useState([]);
   const [ message, setMessage ] = useState("");
   const [ speed, setSpeed ] = useState("1");
-  var currentSong = "song";
-  var unplayedSongs = songs;
+  const [ songIndex, setSongIndex ] = useState(0);
+  const [ songList, setSongList ] = useState([]);
+  // const [ completeList, setCompleteList ] = useState([]);
+
+  let style = "";
+  let dir = "down";
+
+  // const [ unplayedSongs, setUnplayedSongs ] = useState(completeList);
+  // var unplayedSongs = songs;
   // var setlistSpeed = "0";
 
-  var style = "";
+  console.log(`SongList:${songList}`);
+
+
 
   const data = [
     { option: "Sing Normally", optionSize: 3, style: { backgroundColor: "blue", textColor: "white"}},
@@ -38,27 +49,61 @@ function App() {
     { option: "Extra Deep", style: { backgroundColor: "brown", textColor: "white"}},
   ]
 
+  const shuffleSongs = () => {
+    let newList = songs;
+    let currentIndex = newList.length;
+
+    // While there remain elements to shuffle...
+    while (currentIndex != 0) {
+      let randomIndex = Math.floor(Math.random() * currentIndex);
+      currentIndex--;
+
+      [newList[currentIndex], newList[randomIndex]] = [
+        newList[randomIndex], newList[currentIndex]];
+    }
+
+    console.log(`reset newList: ${newList}`);
+
+    setSongList(newList);
+
+    setEndPlaylist(false);
+  }
+
   const handleSpinClick = () => {
     if(!mustSpin){
       const newPrizeNumber = Math.floor(Math.random() * data.length);
       setPrizeNumber(newPrizeNumber);
       setMustSpin(true);
+      }
     }
-  }
 
-  const displaySong = (style) => {
-    const song = unplayedSongs[Math.floor(Math.random() * unplayedSongs.length)]
-    const result = `Sing ${song} in a ${style} voice`;
+    const displaySong = (style) => {
+    // const index = Math.floor(Math.random() * unplayedSongs.length);
+    const song = songList[songIndex];
+
+    // const result = `Sing ${song} in a ${style} voice`;
     // document.getElementById("message").innerHTML = result;
-
     // playedSongs.push(song);
 
-    var newList = playedSongs;
-    newList.push(song);
 
-    setPlayedSongs(newList);
-    console.log(playedSongs.length);
-    console.log(speed);
+
+    let new_playedSongs = playedSongs;
+    new_playedSongs.push(song);
+    setPlayedSongs(new_playedSongs);
+
+    setSongIndex(songIndex + 1);
+
+    console.log(`songIndex: ${songIndex}`);
+    // let new_unplayedSongs = unplayedSongs;
+    // new_unplayedSongs.splice(index, 1);
+    // setUnplayedSongs(new_unplayedSongs);
+    // console.log(playedSongs.length);
+    // console.log(speed);
+    // console.log(unplayedSongs.length);
+    // if(unplayedSongs.length === 0){
+    //   setUnplayedSongs(completeList);
+    // }
+    // console.log(`Unplayed Songs: ${unplayedSongs}`);
 
     setMessage(()=> {
       return(
@@ -70,12 +115,19 @@ function App() {
     // const marquee = document.getElementById("setlist-marq");
     // marquee.scrollamount = 6;
     setSpeed("6");
+    dir = "up";
     console.log("scroll amount changed");
     // marquee.direction = "up";
     }
-
   }
 
+  if(endPlaylist){
+    // reset song index
+    setSongIndex(0);
+    // reset playlist
+    shuffleSongs();
+
+  }
 
   // constructor(props){
   //   super(props);
@@ -105,6 +157,7 @@ function App() {
               <Setlist
                 playedSongs={playedSongs}
                 scrollSpeed={speed}
+                dir={dir}
                 />
               {/* </marquee> */}
             </div>
@@ -119,9 +172,18 @@ function App() {
 
               onStopSpinning={() => {
                 setMustSpin(false);
-                console.log(data[prizeNumber].option);
+                // console.log(data[prizeNumber].option);
                 style = data[prizeNumber].option;
                 displaySong(data[prizeNumber].option);
+
+                if(songIndex === songList.length - 1){
+                  setEndPlaylist(true);
+                  console.log("End of playlist");
+                  // reset song index
+                  setSongIndex(0);
+                  // reset playlist
+                  shuffleSongs();
+                }
               }}
             />
             <button class="spin-button" onClick={handleSpinClick}>SPIN</button>
