@@ -28,7 +28,7 @@ function App() {
   let style = "";
   let dir = "down";
 
-  console.log(`SongList:${songList}`);
+  // console.log(`SongList:${songList}`);
 
   const shuffleSongs = () => {
     let newList = songs;
@@ -43,7 +43,7 @@ function App() {
         newList[randomIndex], newList[currentIndex]];
     }
 
-    console.log(`reset newList: ${newList}`);
+    // console.log(`reset newList: ${newList}`);
 
     setSongList(newList);
 
@@ -68,7 +68,7 @@ function App() {
 
     setSongIndex(songIndex + 1);
 
-    console.log(`songIndex: ${songIndex}`);
+    // console.log(`songIndex: ${songIndex}`);
 
 
     setMessage(()=> {
@@ -102,7 +102,7 @@ function App() {
     // marquee.scrollamount = 6;
     setSpeed("6");
     dir = "up";
-    console.log("scroll amount changed");
+    // console.log("scroll amount changed");
     // marquee.direction = "up";
     }
   }
@@ -152,7 +152,7 @@ function App() {
 
                 if(songIndex === songList.length - 1){
                   setEndPlaylist(true);
-                  console.log("End of playlist");
+                  // console.log("End of playlist");
                   // reset song index
                   setSongIndex(0);
                   // reset playlist
