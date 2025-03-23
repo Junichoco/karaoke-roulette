@@ -5,7 +5,7 @@ import React, { useState } from "react";
 import Songs from "./Components/Songs";
 import Setlist from "./Components/Setlist";
 import { Wheel } from "react-custom-roulette";
-import "./Components/Wheel";
+// import "./Components/Wheel";
 import "./Components/Songs";
 import songs from './Components/Songs';
 import wheelData from "./Components/WheelData";
@@ -27,10 +27,6 @@ function App() {
 
   let style = "";
   let dir = "down";
-
-  // const [ unplayedSongs, setUnplayedSongs ] = useState(completeList);
-  // var unplayedSongs = songs;
-  // var setlistSpeed = "0";
 
   console.log(`SongList:${songList}`);
 
@@ -66,12 +62,6 @@ function App() {
     // const index = Math.floor(Math.random() * unplayedSongs.length);
     const song = songList[songIndex];
 
-    // const result = `Sing ${song} in a ${style} voice`;
-    // document.getElementById("message").innerHTML = result;
-    // playedSongs.push(song);
-
-
-
     let new_playedSongs = playedSongs;
     new_playedSongs.push(song);
     setPlayedSongs(new_playedSongs);
@@ -79,16 +69,7 @@ function App() {
     setSongIndex(songIndex + 1);
 
     console.log(`songIndex: ${songIndex}`);
-    // let new_unplayedSongs = unplayedSongs;
-    // new_unplayedSongs.splice(index, 1);
-    // setUnplayedSongs(new_unplayedSongs);
-    // console.log(playedSongs.length);
-    // console.log(speed);
-    // console.log(unplayedSongs.length);
-    // if(unplayedSongs.length === 0){
-    //   setUnplayedSongs(completeList);
-    // }
-    // console.log(`Unplayed Songs: ${unplayedSongs}`);
+
 
     setMessage(()=> {
       switch(style){
@@ -133,17 +114,6 @@ function App() {
     shuffleSongs();
 
   }
-
-  // constructor(props){
-  //   super(props);
-  //   this.state = {
-  //     setlist: [],
-  //   };
-  // };
-
-  // render(){
-  //   const { setlist } = this.state;
-
 
     return(
       <div class="App">
@@ -197,31 +167,9 @@ function App() {
 
       </div>
     )
-  // };
 
 }
 
-// function App() {
-//   return (
-//     <div className="App">
-//       <header className="App-header">
-//         <h1>Karaoke Wheel of Doom</h1>
-//         <img src={logo} className="App-logo" alt="logo" />
-//         <p>
-//           Edit <code>src/App.js</code> and save to reload.
-//         </p>
-//         <a
-//           className="App-link"
-//           href="https://reactjs.org"
-//           target="_blank"
-//           rel="noopener noreferrer"
-//         >
-//           Learn React
-//         </a>
-//       </header>
-//     </div>
-//   );
-// }
 
 
 export default App;
