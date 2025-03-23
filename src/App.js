@@ -8,15 +8,10 @@ import { Wheel } from "react-custom-roulette";
 import "./Components/Wheel";
 import "./Components/Songs";
 import songs from './Components/Songs';
+import wheelData from "./Components/WheelData";
 import { renderToPipeableStream } from 'react-dom/server';
 
-// const data = [
-//   { option: "Sing Normally", style: { backgroundColor: "blue", textColor: "white"}},
-//   { option: "Anime Voice", style: { backgroundColor: "green", textColor: "white"}},
-//   { option: "High Pitch", style: { backgroundColor: "orange", textColor: "white"}},
-//   { option: "Low Pitch", style: { backgroundColor: "purple", textColor: "white"}},
-//   { option: "Extra Deep Voice", style: { backgroundColor: "brown", textColor: "white"}},
-// ]
+
 
 function App() {
   const [ mustSpin, setMustSpin ] = useState(false);
@@ -38,16 +33,6 @@ function App() {
   // var setlistSpeed = "0";
 
   console.log(`SongList:${songList}`);
-
-
-
-  const data = [
-    { option: "Sing Normally", optionSize: 3, style: { backgroundColor: "blue", textColor: "white"}},
-    { option: "Anime Voice", style: { backgroundColor: "green", textColor: "white"}},
-    { option: "High Pitch", optionSize: 2, style: { backgroundColor: "orange", textColor: "white"}},
-    { option: "Low Pitch", optionSize: 2, style: { backgroundColor: "purple", textColor: "white"}},
-    { option: "Extra Deep", style: { backgroundColor: "brown", textColor: "white"}},
-  ]
 
   const shuffleSongs = () => {
     let newList = songs;
@@ -71,7 +56,7 @@ function App() {
 
   const handleSpinClick = () => {
     if(!mustSpin){
-      const newPrizeNumber = Math.floor(Math.random() * data.length);
+      const newPrizeNumber = Math.floor(Math.random() * wheelData.length);
       setPrizeNumber(newPrizeNumber);
       setMustSpin(true);
       }
@@ -106,9 +91,29 @@ function App() {
     // console.log(`Unplayed Songs: ${unplayedSongs}`);
 
     setMessage(()=> {
-      return(
-        <p>Sing <span class="song">{song}</span> in a {style} voice.</p>
-      )
+      switch(style){
+        case "High":
+        case "Low":
+          return(
+            <p>Sing <span class="song">{song}</span> in a <span class="style">{style} Voice</span>.</p>
+          )
+          break;
+        case "Anime Voice":
+          return(
+            <p>Sing <span class="song">{song}</span> in an <span class="style">{style}</span>.</p>
+          )
+          break;
+        case "Extra Low":
+          return(
+            <p>Sing <span class="song">{song}</span> in an <span class="style">{style} Voice</span>.</p>
+          )
+          break;
+        case "Sing Normally":
+          return(
+            <p>Sing <span class="song">{song}</span> <span class="style">Normally</span>.</p>
+          )
+          break;
+      }
     })
 
     if(playedSongs.length == 2){
@@ -146,11 +151,7 @@ function App() {
           <h1>Karaoke Roulette of Doom</h1>
         </div>
         <div class="wheel-section">
-          <div class="next-song">
-            <h2>Now Playing</h2>
-            <div id="message">
-              {message}
-            </div>
+          <div class="setlist-container">
             <div id="setlist">
               <h2>Setlist</h2>
               {/* <marquee id="setlist-marq" scrollamount={speed}> */}
@@ -163,18 +164,21 @@ function App() {
             </div>
           </div>
           <div class="wheel">
-
+          <h2>Now Playing</h2>
+            <div id="message">
+              {message}
+            </div>
             <Wheel
               mustStartSpinning={mustSpin}
               prizeNumber={prizeNumber}
-              data={data}
+              data={wheelData}
               spinDuration={0.3}
 
               onStopSpinning={() => {
                 setMustSpin(false);
                 // console.log(data[prizeNumber].option);
-                style = data[prizeNumber].option;
-                displaySong(data[prizeNumber].option);
+                style = wheelData[prizeNumber].option;
+                displaySong(wheelData[prizeNumber].option);
 
                 if(songIndex === songList.length - 1){
                   setEndPlaylist(true);
@@ -186,7 +190,7 @@ function App() {
                 }
               }}
             />
-            <button class="spin-button" onClick={handleSpinClick}>SPIN</button>
+            <button class="css-button-gradient--4" onClick={handleSpinClick}>SPIN</button>
 
           </div>
         </div>
