@@ -6,13 +6,15 @@ class Setlist extends Component {
 
     return(
 
-      <marquee id="setlist-marq" direction={dir} scrollamount={scrollSpeed}>
+      <div id="setlist-scroll">
         {playedSongs.map((song, index) => {
           return(
-            <p>{index + 1}. {song}</p>
+            <div>
+              <p>{index + 1}. {song}</p>
+            </div>
           )
         })}
-      </marquee>
+      </div>
     )
   }
 }
