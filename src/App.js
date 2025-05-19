@@ -124,13 +124,11 @@ function App() {
           <div class="setlist-container">
             <div id="setlist">
               <h2>Setlist</h2>
-              {/* <marquee id="setlist-marq" scrollamount={speed}> */}
               <Setlist
                 playedSongs={playedSongs}
                 scrollSpeed={speed}
                 dir={dir}
                 />
-              {/* </marquee> */}
             </div>
           </div>
           <div class="wheel">
